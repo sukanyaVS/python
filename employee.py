@@ -23,7 +23,7 @@ employee_name = "Greeshma Merin Lal"
 years_of_experience = 3.5
 current_salary = 40000.0
 programming_languages = ["Python", "React", "TypeScript"]
-currently_assigned = False
+is_currently_assigned = False
 
 #2.
 
@@ -32,15 +32,15 @@ print("--------------------")
 print("Name:", employee_name)
 print("Employee ID:", employee_id)
 print("Years of Experience:", years_of_experience)
-print("Current Salary:", current_salary)
+print(f"Current Salary: ₹{current_salary:.2f}")
 print("Programming Languages:", programming_languages)
-print("Currently Assigned:", currently_assigned)
+print(f"Currently Assigned: {is_currently_assigned}")
 
 #3.
 
 increment = current_salary * 0.10
 new_salary = current_salary + increment
-print("Salary after 10% increment:", new_salary)
+print(f"Salary after 10% increment: ₹{new_salary:.2f}")
 
 #4.
 
@@ -49,7 +49,7 @@ print("Number of Programming Languages:", number_of_languages)
 
 #5.
 
-if (years_of_experience >= 2) and (not currently_assigned):
+if (years_of_experience >= 2) and (not is_currently_assigned):
     print("The employee is eligible for project allocation.")
 else:
     print("The employee is not eligible for project allocation.")

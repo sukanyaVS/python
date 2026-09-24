@@ -20,6 +20,11 @@ cart = [
 ]
 
 def add_product(name, price, quantity):
+    for product in cart:
+        if product["name"] == name:
+            print("Product is already in the cart.")
+            return
+
     product = {"name": name, "price": price, "quantity": quantity}
     cart.append(product)
     print("Successfully added to the cart.")

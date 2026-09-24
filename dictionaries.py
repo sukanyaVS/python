@@ -27,10 +27,10 @@ for product in products:
     print("Quantity:", product["quantity"])
     print("=======================")
 
-id = int(input("Enter product ID to search: "))
+product_id = int(input("Enter product ID to search: "))
 
 for product in products:
-    if product["id"] == id:
+    if product["id"] == product_id:
         print("Product found:")
         print("ID:", product["id"])
         print("Name:", product["name"])

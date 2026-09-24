@@ -27,3 +27,5 @@ for attempts in range(3):
         print("Invalid username")
     else:
         print("Invalid password")
+
+else: print("Maximum login attempts reached")        

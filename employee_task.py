@@ -12,16 +12,23 @@
 
 employee_name = input("Enter employee name: ")
 tasks_assigned = int(input("Enter number of tasks assigned: "))
+while tasks_assigned <= 0:
+    print("Tasks assigned must be greater than 0.")
+    tasks_assigned = int(input("Enter number of tasks assigned: "))
+
 tasks_completed = int(input("Enter number of tasks completed: "))
 customer_rating = float(input("Enter average customer rating: "))
+while customer_rating < 1 or customer_rating > 5:
+    print("Customer rating must be between 1 and 5.")
+    customer_rating = float(input("Enter average customer rating: "))
 
 completion_percentage = (tasks_completed / tasks_assigned) * 100
 
-if (completion_percentage >= 90 and customer_rating >= 4.5):
+if completion_percentage >= 90 and customer_rating >= 4.5:
     performance_level = "Excellent"
-elif (completion_percentage >= 75 and customer_rating >= 4.0):
+elif completion_percentage >= 75 and customer_rating >= 4.0:
     performance_level = "Good"
-elif (completion_percentage >= 60 and customer_rating >= 3.0):
+elif completion_percentage >= 60 and customer_rating >= 3.0:
     performance_level = "Average"
 else:
     performance_level = "Needs Improvement"

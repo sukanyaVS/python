@@ -1,0 +1,23 @@
+[
+    {
+        "id": 101,
+        "name": "Anu",
+        "designation": "Python Developer",
+        "skills": ["Python", "Django", "SQL"],
+        "salary": 65000
+    },
+    {
+        "id": 102,
+        "name": "Rahul",
+        "designation": "Frontend Developer",
+        "skills": ["React", "JavaScript", "HTML", "CSS"],
+        "salary": 60000
+    },
+    {
+        "id": 103,
+        "name": "Priya",
+        "designation": "Backend Developer",
+        "skills": ["Python", "Django", "MySQL"],
+        "salary": 70000
+    }
+]

@@ -1,0 +1,4 @@
+product_id,product_name,category,price,quantity,supplier_name
+P101,Laptop,Electronics,65000,5,Tech Suppliers
+P102,Wireless Mouse,Accessories,1200,15,Computer World
+P103,Office Chair,Furniture,8500,8,Office Solutions

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from fastapi_project.database import get_db
-from fastapi_project.models.users import User
+from fastapi_project.repositories.user_repository import UserRepository
 from fastapi_project.schemas.user import CreateUser, CreateUserResponse
+from fastapi_project.services.user_service import UserService
 
 router = APIRouter(
     prefix="/users",
@@ -12,29 +12,22 @@ router = APIRouter(
 )
 
 
-@router.get("/")
-def get_users(db: Session = Depends(get_db)):
-    result = db.execute(select(User))
-    users = result.scalars().all()
+def get_user_service(db: Session = Depends(get_db)) -> UserService:
+    return UserService(UserRepository(db))
 
-    return users
+
+@router.get("/")
+def get_users(service: UserService = Depends(get_user_service)):
+    return service.get_users()
 
 @router.post("/", response_model=CreateUserResponse)
-def create_user(user: CreateUser, db: Session = Depends(get_db)):
-    new_user = User(
-        name=user.name,
-        email=user.email
-    )
-
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+def create_user(user: CreateUser, service: UserService = Depends(get_user_service)):
+    return service.create_user(user)
 
 
 @router.get("/{user_id}", response_model=CreateUserResponse)
-def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
+def get_user(user_id: int, service: UserService = Depends(get_user_service)):
+    user = service.get_user(user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -44,29 +37,27 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{user_id}", response_model=CreateUserResponse)
-def update_user(user_id: int, updated_user: CreateUser, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
+def update_user(
+    user_id: int,
+    updated_user: CreateUser,
+    service: UserService = Depends(get_user_service),
+):
+    user = service.update_user(user_id, updated_user)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found",
         )
 
-    user.name = updated_user.name
-    user.email = updated_user.email
-    db.commit()
-    db.refresh(user)
     return user
 
 @router.delete("/{user_id}")
-def delete_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
-    if not user:
+def delete_user(user_id: int, service: UserService = Depends(get_user_service)):
+    deleted = service.delete_user(user_id)
+    if not deleted:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found",
         )
 
-    db.delete(user)
-    db.commit()
     return {"message": "User deleted successfully"}    

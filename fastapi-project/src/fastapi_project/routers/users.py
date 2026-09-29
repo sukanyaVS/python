@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from fastapi_project.database import get_db
-from fastapi_project.models import User
+from fastapi_project.models.users import User
 from fastapi_project.schemas.user import CreateUser, CreateUserResponse
 
 router = APIRouter(

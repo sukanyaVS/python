@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi_project.database import get_db
 from fastapi_project.repositories.user_repository import UserRepository
 from fastapi_project.schemas.user import CreateUser, CreateUserResponse
+from fastapi_project.schemas.user import CreateUser, UserResponse
 from fastapi_project.services.user_service import UserService
 
 router = APIRouter(
@@ -21,11 +22,14 @@ async def get_users(service: UserService = Depends(get_user_service)):
     return await service.get_users()
 
 @router.post("/", response_model=CreateUserResponse)
+@router.post("/", response_model=UserResponse)
 async def create_user(user: CreateUser, service: UserService = Depends(get_user_service)):
     return await service.create_user(user)
 
 
 @router.get("/{user_id}", response_model=CreateUserResponse)
+@router.get("/{user_id}", response_model=UserResponse)
+    response_model=UserResponse,
 async def get_user(user_id: int, service: UserService = Depends(get_user_service)):
     user = await service.get_user(user_id)
     if not user:
